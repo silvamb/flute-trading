@@ -25,8 +25,8 @@ public class ProfitCalculator {
 
         System.out.println("Schuurs " + schuur.getName());
         System.out.println("Maximum profit is " + profits.get(0).getProfit());
-        System.out.println("Number of fluts to buy: ");
-        profits.forEach(c -> System.out.print(c + " "));
+        System.out.print("Number of fluts to buy: ");
+        profits.forEach(c -> System.out.print(c.getFlutes() + " "));
         System.out.println();
     }
 
@@ -35,7 +35,6 @@ public class ProfitCalculator {
         List<Cart> carts = new ArrayList<>();
 
         for(FlutePile pile : schuur.getFlutePiles()) {
-            System.out.println("Calculating pile");
             List<Cart> pileMaxProfits = calculateMaxProfit(pile);
             carts = merge(carts, pileMaxProfits);
         }
@@ -56,7 +55,7 @@ public class ProfitCalculator {
 
         return profitList.stream()
                 .collect(Collectors.groupingBy(
-                        Cart::getFlutes,
+                        Cart::getProfit,
                         () -> new TreeMap<>(Comparator.reverseOrder()),
                         Collectors.toList()))
                 .firstEntry()
